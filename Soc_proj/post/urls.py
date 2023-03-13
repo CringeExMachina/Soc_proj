@@ -5,6 +5,6 @@ urlpatterns = [
     #General
     path('', views.index),
     #Post group
-    path('group/<str:pk>/', views.group_posts)
+    path('group/<slug:slugs>/', views.group_posts)
 
 ]
