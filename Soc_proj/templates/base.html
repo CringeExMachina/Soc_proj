@@ -1,0 +1,21 @@
+<!DOCTYPE html> <!-- Используется html 5 версии -->
+<html lang="ru"> <!-- Язык сайта - русский -->
+<head>
+    {% block title %}
+        Название
+    {% endblock %}
+</head>
+<body>
+    <header>
+        {% include 'includes/header.html'%}
+    </header>
+<main>
+    {% block content%}
+        Контент
+    {% endblock %}
+</main>
+<footer>
+        {%include 'includes/footer.html'%}
+</footer>
+</body>
+</html>
