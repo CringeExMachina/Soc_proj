@@ -1,9 +1,11 @@
 <!DOCTYPE html> <!-- Используется html 5 версии -->
 <html lang="ru"> <!-- Язык сайта - русский -->
-{%load static %}
-<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
 
 <head>
+    {%load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    
     <title> 
         {% block title %} Название {% endblock %} 
     </title>

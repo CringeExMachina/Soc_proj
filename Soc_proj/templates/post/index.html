@@ -4,6 +4,22 @@
   {{title}}
 {%endblock%}
 
+ 
 {%block content%}
     {{text|safe}}
+
+    {%for post in posts%}
+    <ul>
+      <li>
+        Автор:{{ post.author}}
+      </li>
+      <li>
+        Дата публикации:{{ post.pub_date|date:"d E Y" }}
+      </li>
+    </ul>
+    <p>{{ post.text }}</p>
+    <a href="{% url 'post:Groups' post.group%}"> все записи группы</a>
+    {% if not forloop.last %}<hr>{% endif %}
+    {% endfor %}
+
 {%endblock%}

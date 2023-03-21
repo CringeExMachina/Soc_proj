@@ -2,14 +2,16 @@
  <header>
       <!-- Использованы классы бустрапа для создания типовой навигации с логотипом -->
       <!-- В дальнейшем тут будет создано полноценное меню -->
-      <nav class="navbar navbar-light" style="background-color: lightskyblue">
+      <nav class="navbar navbar-light" style="background-color: DarkSlateGray">
         <div class="container">
           <a class="navbar-brand" href="{% url 'post:General' %}">
-            <img src="img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+            {% load static %}
+            <img src={%static 'img/logo.png' %} width="30" height="30" class="d-inline-block align-top" alt="">
             <!-- тег span используется для добавления нужных стилей отдельным участкам текста -->
-            Psycho<span style="color:red">killa</span></a>
+            <span style="color:Crimson">Люблю Дашу</a>
           </a>
         </div>
       </nav>
     </header>
+
 
