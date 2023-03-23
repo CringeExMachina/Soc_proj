@@ -6,19 +6,17 @@
 
  
 {%block content%}
-    {{text|safe}}
+    {{text}}
 
     {%for post in posts%}
     <ul>
       <li>
-        Автор:{{ post.author}}
-      </li>
-      <li>
+        Автор:{{ post.author}}<br>
         Дата публикации:{{ post.pub_date|date:"d E Y" }}
       </li>
     </ul>
     <p>{{ post.text }}</p>
-    <a href="{% url 'post:Groups' post.group%}"> все записи группы</a>
+    <a href="{% url 'post:Groups' post.group%}" style="color:Aqua;"> все записи группы</a>
     {% if not forloop.last %}<hr>{% endif %}
     {% endfor %}
 

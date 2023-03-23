@@ -2,13 +2,13 @@
  <header>
       <!-- Использованы классы бустрапа для создания типовой навигации с логотипом -->
       <!-- В дальнейшем тут будет создано полноценное меню -->
-      <nav class="navbar navbar-light" style="background-color: DarkSlateGray">
+      <nav class="navbar navbar-light" style="background-color:Azure; box-shadow: 10px 5px 5px Gainsboro ;">
         <div class="container">
-          <a class="navbar-brand" href="{% url 'post:General' %}">
+          <a class="navbar-brand" href="{% url 'post:General' %}" style="left">
             {% load static %}
-            <img src={%static 'img/logo.png' %} width="30" height="30" class="d-inline-block align-top" alt="">
+            <img src={%static 'img/logo2.png' %} width="50" height="50" class="d-inline-block align-left" alt="">
             <!-- тег span используется для добавления нужных стилей отдельным участкам текста -->
-            <span style="color:Crimson">Люблю Дашу</a>
+            <span style="color:Black;font-family:serif;font-weight: bold;">Тестовый проект на Django</a>
           </a>
         </div>
       </nav>
