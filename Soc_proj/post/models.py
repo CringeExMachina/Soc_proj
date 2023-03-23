@@ -15,7 +15,7 @@ User = get_user_model()
 
 class Post(models.Model):
     
-    def __str__(self) -> str:
+    def __str__(self):
         return self.text
     
     text = models.TextField()
