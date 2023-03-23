@@ -14,6 +14,10 @@ class Group(models.Model):
 User = get_user_model()
 
 class Post(models.Model):
+    
+    def __str__(self) -> str:
+        return self.text
+    
     text = models.TextField()
     pub_date = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(
