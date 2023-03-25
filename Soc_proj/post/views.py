@@ -5,14 +5,13 @@ from .models import Post,Group
 
 def index(request):
     template = 'post/index.html'
+    keyword=request.GET.get("q",None)
+    if keyword:
+        posts=Post.objects.filter(text__contains=keyword).select_related('author').select_related('group')
+    else:
+        posts=Post.objects.all()
     
-    posts = Post.objects.order_by('-pub_date')[:10]
-    title = 'Главная страница'
-    text = 'Это главная страница проекта'
-    
-    context = {'title':title, 'text':text, 'posts':posts}
-    
-    return render(request, template, context)
+    return render(request, template, {"posts":posts, "keyword":keyword})
 
 
 def group_posts(request, slugs):
