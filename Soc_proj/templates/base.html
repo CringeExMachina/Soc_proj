@@ -21,18 +21,18 @@
     </title>
 </head>
 <body>
-    <header>
-        {% include 'includes/header.html'%}
-    </header>
+    
+    {% include 'includes/header.html'%}
+
 <main>
-    <h3>
+    <p>
     {% block content%}
         Наполнение
     {% endblock %}
-    </h3>
+    </p>
 </main>
-<footer>
-        {%include 'includes/footer.html'%}
-</footer>
+
+    {%include 'includes/footer.html'%}
+
 </body>
 </html>

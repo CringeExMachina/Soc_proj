@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <!-- Based on https://getbootstrap.com/docs/4.4/examples/pricing/ -->
-
+{%extends 'base.html'%}
 <html lang="ru">
 
   <head>
@@ -16,7 +16,7 @@
 
     />
 
-    <title>Поиск</title>
+    {%block title%}Поиск{%endblock%}
 
 
 
@@ -37,7 +37,7 @@
   </head>
 
 ​
-
+{%block content%}
   <body>
 
   <div class="container">
@@ -91,3 +91,4 @@
     <hr>
 
     {% endfor %}
+    {%endblock%}
