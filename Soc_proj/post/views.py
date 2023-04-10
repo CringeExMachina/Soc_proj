@@ -1,28 +1,69 @@
-from django.http import HttpResponse
-from django.shortcuts import render,get_object_or_404
-from .models import Post,Group
+from django.core.paginator import Paginator
+from django.shortcuts import redirect, render,get_object_or_404
+from django.views.generic import TemplateView,CreateView
+from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
+from .models import Post,Group,User
+from .forms import PostForm
 
-
+@login_required
 def index(request):
     template = 'post/index.html'
+    
     keyword=request.GET.get("q",None)
     if keyword:
-        posts=Post.objects.filter(text__contains=keyword).select_related('author').select_related('group')
+        posts = Post.objects.filter(text__contains=keyword).select_related('author').select_related('group')
     else:
-        posts=Post.objects.all()
+        posts = Post.objects.all().order_by('-pub_date').select_related('author').select_related('group')
+        
+    paginator = Paginator(posts,10)
+    page_num = request.GET.get('page')
+    page_obj = paginator.get_page(page_num)
     
-    return render(request, template, {"posts":posts, "keyword":keyword})
+    context = {'page_obj':page_obj,'posts':posts,'keyword':keyword}
+    return render(request, template, context)
 
 
 def group_posts(request, slugs):
     template = 'post/group_post.html'
     group = get_object_or_404(Group,adress=slugs)
-    posts=Post.objects.filter(group=group).order_by('-pub_date')[:10]
+    posts=Post.objects.filter(group=group).order_by('-pub_date')[:10].select_related('author')
     title = 'Группы'
-
-    context = {'title':title, 'group':group, 'posts':posts}
     
+    paginator = Paginator(posts,10)
+    page_num = request.GET.get('page')
+    page_obj = paginator.get_page(page_num)
+
+    context = {'title':title, 'group':group, 'posts':posts, 'page_obj':page_obj}
     return render(request, template, context)
+
+def profile(request,username):
+    name=get_object_or_404(User,username=username)
+    posts=Post.objects.filter(author=name).select_related('author')
+    post_count=posts.count
+    
+    context={'username':username,'posts':posts,'post_count':post_count}
+    return render(request,'post/profile.html',context)
+
+
+def post_detail(request,post_id):
+    posts=get_object_or_404(Post,id=post_id)
+    post_count=Post.objects.filter(author=posts.author).count 
+    
+    context={'posts':posts,'post_count':post_count}
+    return render(request,'post/post_detail.html',context)
+
+
+@login_required
+def post_create(request):
+    form = PostForm(request.POST or None)
+    if not form.is_valid():
+        return render(request, 'post/create_post.html', {'form': form})
+    post = form.save(commit=False)
+    post.author = request.user
+    post.save()
+    return redirect("post:profile",request.user.username)
+
 
 
 

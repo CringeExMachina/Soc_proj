@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{%extends 'base.html'%}
+<html lang="ru"> 
+  <head>  
+    <!-- Подключены иконки, стили и заполенены мета теги -->
+    {% block title %}Профайл пользователя {{ username }} {% endblock %}
+    {%block content%}
+  </head>
+  <body>       
+    <main>
+      <div class="container py-5">        
+        <h1>Все посты пользователя {{ username }} </h1>
+        <h3>Всего постов: {{ post_count }} </h3>
+        {% for post in posts%}   
+        <article>
+          <ul>
+            <li>
+                <strong>
+              Автор: {{ post.author.get_full_name }}
+                </strong>
+            </li>
+            <li>
+                <strong>
+              Дата публикации: {{ post.pub_date|date:"d M Y" }}
+                </strong>
+            </li>
+            <li>
+               <strong> Группа: </strong>
+
+                <a href="{% url 'post:Groups' post.group %}">{{ post.group.title }}</a>
+            </li>
+          </ul>
+          <p>
+            {{ post.text|linebreaksbr }}
+          </p>
+          <a href="{%url 'post:post_detail' post.pk  %}">подробная информация </a>
+          <hr>
+        </article>
+        {% endfor %}     
+              
+        <hr>
+        <!-- Остальные посты. после последнего нет черты -->
+        {% include 'post/includes/paginator.html'  %}
+        <!-- Здесь подключён паджинатор -->  
+      </div>
+    </main>
+  </body>
+</html> 
+{% endblock %}

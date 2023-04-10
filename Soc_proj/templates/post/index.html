@@ -74,15 +74,15 @@
 
     <div class="container">
 
-    {% for post in posts %}
+    {% for post in posts%}
 
     <strong>
 
-        Автор: {{ post.author.get_full_name }}, 
+        Автор:<a href="{% url 'post:profile' post.author %}"> {{ post.author.get_full_name }} </a>, 
 
         Дата публикации: {{ post.pub_date|date:"d M Y" }}, 
 
-        Группа: {{ post.group.title }}
+        Группа: <a href="{% url 'post:Groups' post.group %}"> {{ post.group.title }} </a>
 
     </strong>
 
@@ -91,4 +91,7 @@
     <hr>
 
     {% endfor %}
+
+    {% include 'post/includes/paginator.html'  %}
+
     {%endblock%}

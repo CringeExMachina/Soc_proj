@@ -14,7 +14,11 @@ from pathlib import Path
 
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'post:General'
-LOGOUT_REDIRECT_URL='post:General'
+#LOGOUT_REDIRECT_URL='post:General'
+
+
+
+CSRF_TRUSTED_ORIGINS=['http://127.0.0.1:8000/']
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -35,6 +39,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'about.apps.AboutConfig', #Приложение статичных страниц
     'core.apps.CoreConfig', #Приложение для фильтров
     'post.apps.PostConfig', #Приложение постов
     'users.apps.UsersConfig', #Приложение пользователей
@@ -59,6 +64,11 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'Soc_proj.urls'
 
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+# указываем директорию, в которую будут складываться файлы писем
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails') 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -70,6 +80,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'core.context_processors.year.year',
             ],
         },
     },

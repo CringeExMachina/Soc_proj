@@ -5,15 +5,22 @@
 {%endblock%}
 
 {%block content%}
-    {{group|safe}}
 
     {% for post in posts %}
-    <ul>
-      <li> Автор: {{ post.author }} </li>
-      <li> Дата публикации: {{ post.pub_date|date:"d E Y" }} </li>
-    </ul>
-    <p> {{ post.text }} <p>
+    <strong>
+
+      Автор: {{ post.author.get_full_name }}, 
+
+      Дата публикации: {{ post.pub_date|date:"d M Y" }}, 
+
+      Группа: <a href="{% url 'post:Groups' post.group %}"> {{ post.group.title }} </a>
+
+  </strong>
+
+  <p>{{ post.text|linebreaksbr }}</p>
+
       {% if not forloop.last %}<hr>{% endif %}
     {% endfor %}
-         
+  
+  {% include 'post/includes/paginator.html'  %}
 {%endblock%}
