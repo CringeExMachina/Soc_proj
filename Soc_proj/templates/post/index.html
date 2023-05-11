@@ -2,6 +2,7 @@
 
 <!-- Based on https://getbootstrap.com/docs/4.4/examples/pricing/ -->
 {%extends 'base.html'%}
+{% load thumbnail %}
 <html lang="ru">
 
   <head>
@@ -85,6 +86,10 @@
         Группа: <a href="{% url 'post:Groups' post.group %}"> {{ post.group.title }} </a>
 
     </strong>
+
+    {% thumbnail post.image "960x339" crop="center" upscale=True as im %}
+            <img class="card-img my-2" src="{{ im.url }}">
+          {% endthumbnail %}
 
     <p>{{ post.text|linebreaksbr }}</p>
 

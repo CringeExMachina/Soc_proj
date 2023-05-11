@@ -3,8 +3,8 @@ from django.shortcuts import redirect, render,get_object_or_404
 from django.views.generic import TemplateView,CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
-from .models import Post,Group,User
-from .forms import PostForm
+from .models import Post,Group,User,Comments
+from .forms import PostForm,CommentForm
 
 @login_required
 def index(request):
@@ -46,11 +46,26 @@ def profile(request,username):
     return render(request,'post/profile.html',context)
 
 
+@login_required
+def add_comment(request, post_id):
+    post = get_object_or_404(Post,id=post_id) 
+    form = CommentForm(request.POST or None)
+    if form.is_valid(): 
+        comment = form.save(commit=False)
+        comment.author = request.user
+        comment.post = post
+        comment.save()
+    return redirect('post:post_detail', post_id=post_id) 
+
+
 def post_detail(request,post_id):
-    posts=get_object_or_404(Post,id=post_id)
-    post_count=Post.objects.filter(author=posts.author).count 
+    posts = get_object_or_404(Post,id=post_id)
+    post_count = Post.objects.filter(author=posts.author).count 
+    form = CommentForm(request.POST or None)
+    comments = Comments.objects.filter(post=post_id)
+    comments_count=Comments.objects.all().count()
     
-    context={'posts':posts,'post_count':post_count}
+    context={'posts':posts,'post_count':post_count,'form':form,'comments':comments,'count':comments_count}
     return render(request,'post/post_detail.html',context)
 
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {%extends 'base.html'%}
+{% load thumbnail %}
 <html lang="ru"> 
   <head>  
     <!-- Подключены иконки, стили и заполенены мета теги -->
@@ -33,6 +34,11 @@
           <p>
             {{ post.text|linebreaksbr }}
           </p>
+
+          {% thumbnail post.image "960x339" crop="center" upscale=True as im %}
+            <img class="card-img my-2" src="{{ im.url }}">
+          {% endthumbnail %}
+
           <a href="{%url 'post:post_detail' post.pk  %}">подробная информация </a>
           <hr>
         </article>

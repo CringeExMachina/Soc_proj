@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load thumbnail %}
 {%block title%}
   {{title}}
 {%endblock%}
@@ -18,6 +18,10 @@
   </strong>
 
   <p>{{ post.text|linebreaksbr }}</p>
+
+  {% thumbnail post.image "960x200" crop="center" upscale=True as im %}
+            <img class="card-img my-2" src="{{ im.url }}">
+          {% endthumbnail %}
 
       {% if not forloop.last %}<hr>{% endif %}
     {% endfor %}

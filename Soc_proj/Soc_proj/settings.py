@@ -33,8 +33,15 @@ SECRET_KEY = 'django-insecure-(038o^9vdlunp&vg(r_4g=kw&0rosy0y*a@(fqp(o3@s%p4&-!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '[::1]',
+    'testserver',
+]
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Application definition
 
@@ -49,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'sorl.thumbnail', #Работа с картинками
 ]
 
 MIDDLEWARE = [

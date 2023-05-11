@@ -13,6 +13,8 @@ urlpatterns = [
     
     path('posts/<int:post_id>/',views.post_detail,name='post_detail'),
     
+    path('posts/<int:post_id>/comment', views.add_comment, name='add_comment'),
+    
     path('create/',views.post_create,name='post_create'),
 
 ]
