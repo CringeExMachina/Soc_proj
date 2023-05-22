@@ -10,5 +10,4 @@ class PostForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comments
-        labels = {'text': 'Текст комментария', 'post':'Пост', 'author':'Автор','created':'Дата создания'}
         fields=('text','post','author')

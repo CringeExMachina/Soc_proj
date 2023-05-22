@@ -6,6 +6,10 @@ from django.contrib.auth.decorators import login_required
 from .models import Post,Group,User,Comments
 from .forms import PostForm,CommentForm
 
+from django.views.decorators.cache import cache_page #Кеширование
+
+
+@cache_page(20)
 @login_required
 def index(request):
     template = 'post/index.html'
@@ -48,7 +52,8 @@ def profile(request,username):
 
 @login_required
 def add_comment(request, post_id):
-    post = get_object_or_404(Post,id=post_id) 
+    post = get_object_or_404(Post,id=post_id)
+    
     form = CommentForm(request.POST or None)
     if form.is_valid(): 
         comment = form.save(commit=False)
@@ -62,8 +67,8 @@ def post_detail(request,post_id):
     posts = get_object_or_404(Post,id=post_id)
     post_count = Post.objects.filter(author=posts.author).count 
     form = CommentForm(request.POST or None)
-    comments = Comments.objects.filter(post=post_id)
-    comments_count=Comments.objects.all().count()
+    comments = Comments.objects.filter(post=posts)
+    comments_count=Comments.objects.filter(post=posts).count()
     
     context={'posts':posts,'post_count':post_count,'form':form,'comments':comments,'count':comments_count}
     return render(request,'post/post_detail.html',context)

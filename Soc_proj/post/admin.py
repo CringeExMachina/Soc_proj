@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Group,Post
+from .models import Group,Post,Comments
 
 class PostAdmin(admin.ModelAdmin):
     list_display=('pk','text','pub_date','author','group')
@@ -10,3 +10,4 @@ class PostAdmin(admin.ModelAdmin):
     
 admin.site.register(Post,PostAdmin)
 admin.site.register(Group)
+admin.site.register(Comments)

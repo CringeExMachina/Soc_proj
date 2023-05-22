@@ -16,7 +16,11 @@ LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'post:General'
 #LOGOUT_REDIRECT_URL='post:General'
 
-
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+} 
 
 CSRF_TRUSTED_ORIGINS=['http://127.0.0.1:8000/']
 
@@ -38,6 +42,11 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     '[::1]',
     'testserver',
+   
+    'www.psychokilla.pythonanywhere.com',
+    'psychokilla.pythonanywhere.com',
+
+    
 ]
 
 MEDIA_URL = '/media/'
@@ -55,8 +64,10 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles', # Приложение staticfiles необходимо для работы приложения DjDT
+    'debug_toolbar', # Дебаггер для джанго
     'sorl.thumbnail', #Работа с картинками
+    
 ]
 
 MIDDLEWARE = [
@@ -67,6 +78,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware'
 ]
 
 ROOT_URLCONF = 'Soc_proj.urls'
