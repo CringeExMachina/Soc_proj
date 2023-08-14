@@ -11,6 +11,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework import generics
+from rest_framework import viewsets
 
 from django.views.decorators.cache import cache_page #Кеширование
 
@@ -55,6 +56,11 @@ def profile(request,username):
     context={'username':username,'posts':posts,'post_count':post_count}
     return render(request,'post/profile.html',context)
     
+
+class PostViewSet(viewsets.ModelViewSet):
+    queryset=Post.objects.all
+    serializer_class=PostSerializer
+
 
 class APIPostList(generics.ListCreateAPIView):
     queryset = Post.objects.all()
