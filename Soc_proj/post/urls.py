@@ -17,9 +17,9 @@ urlpatterns = [
     
     path('create/',views.post_create,name='post_create'),
     
-    path('api/v1/posts/<int:post_id>',views.api_posts_detail),
+    path('api/v1/posts/<int:post_id>', APIPostDetail.as_view()),
     
-    path('api/v1/posts/', views.api_posts),
+    path('api/v1/posts/', APIPostList.as_view),
     
 
 
