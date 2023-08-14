@@ -5,6 +5,12 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from .models import Post,Group,User,Comments
 from .forms import PostForm,CommentForm
+from .serializers import PostSerializer
+from django.http import JsonResponse
+from rest_framework.decorators import api_view
+from rest_framework import status
+from rest_framework.response import Response
+
 
 from django.views.decorators.cache import cache_page #Кеширование
 
@@ -48,6 +54,37 @@ def profile(request,username):
     
     context={'username':username,'posts':posts,'post_count':post_count}
     return render(request,'post/profile.html',context)
+    
+
+@api_view(['POST','GET'])
+def api_posts(request):
+    
+    if request.method == 'POST':
+        serializer = PostSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    posts=Post.objects.all()
+    serializer=PostSerializer(posts, many=True)
+    return JsonResponse(serializer.data)
+
+
+@api_view(['GET','PUT','PATCH','DELETE'])
+def api_posts_detail(request,pk):
+    
+    post=Post.objects.get(id=pk)
+    if request.method == 'PUT' or 'PATCH':
+        serializer=PostSerializer(post, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'DELETE':
+        post.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    serializer=PostSerializer(post)
+    return Response(serializer.data)
 
 
 @login_required

@@ -16,5 +16,11 @@ urlpatterns = [
     path('posts/<int:post_id>/',views.post_detail,name='post_detail'),
     
     path('create/',views.post_create,name='post_create'),
+    
+    path('api/v1/posts/<int:post_id>',views.api_posts_detail),
+    
+    path('api/v1/posts/', views.api_posts),
+    
+
 
 ]

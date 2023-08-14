@@ -35,6 +35,7 @@ class Post(CreatedModel):
         upload_to='posts/',
         blank=True)
 
+
 class Comments(models.Model):
 
     text = models.TextField(blank=True,null=True)
